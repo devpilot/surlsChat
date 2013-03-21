@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>Socket.IO example application</title>
+		<style type="text/css">
+			#input {
+				width: 200px;
+			}
+			#messages {
+				position: fixed;
+				top: 40px;
+				bottom: 8px;
+				left: 8px;
+				right: 8px;
+				border: 1px solid #EEEEEE;
+				padding: 8px;
+			}
+		</style>
+		<script src="http://localhost:4000/socket.io/socket.io.js"></script>
+	</head>
+	<body>
+		Your message:
+		<input type="text" id="input">
+		<div id="messages"></div>
+	</body>
+	<script type="text/javascript">
+			var messagesElement = document.getElementById('messages');
+			var lastMessageElement = null;
+			function addMessage(message) {
+				var newMessageElement = document.createElement('div');
+				var newMessageText = document.createTextNode(message);
+				newMessageElement.appendChild(newMessageText);
+				messagesElement.insertBefore(newMessageElement,lastMessageElement);
+				lastMessageElement = newMessageElement;
+			}
+			var socket = io.connect('http://localhost:4000');
+			socket.on('serverMessage', function(content) {
+				addMessage(content);
+			});
+			
+			var inputElement = document.getElementById('input');
+			inputElement.onkeydown = function(keyboardEvent) {
+				if (keyboardEvent.keyCode === 13) {
+					socket.emit('clientMessage', inputElement.value);
+					inputElement.value = '';
+					return false;
+				} else {
+					return true;
+				}
+			};
+		</script>
+</html>
