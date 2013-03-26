@@ -25,12 +25,13 @@ io.sockets.on('connection', function (socket) {
 		socket.get('partner', function(err, partner) {
 			io.sockets.socket(partner).emit('serverMessage','Stranger ' + content);
 		});
-		// socket.broadcast.emit('serverMessage','Stranger ' + content);
 	});
 
 	// user typing
 	socket.on('typing',function(){
-		socket.broadcast.emit('typing');
+		socket.get('partner', function(err, partner) {
+			io.sockets.socket(partner).emit('typing');
+		});
 	});
 
 	// client disconnected
@@ -50,21 +51,29 @@ function randomHandeler(userAvailable, socket){
 	function randPartner(queue, callback){
 		if (queue.length > 1){
 			var k = Math.round(Math.random() * (queue.length - 1));
-			if(queue[k] == socket){
+			if(queue[k] == socket.id){
 			  return randPartner(queue,callback);
 	    	} else {
-	    		clearTimeout(tO);
+	    		//clearTimeout(tO);
 	    	   callback(queue[k]);
 	    	}
 	    } else {
-	    	var tO = setTimeout(function(){
-	    		return randPartner(queue,callback);
-	    	},200);
+	    	// var tO = setTimeout(function(){
+	    	// 	console.log("user waiting...");
+	    	// 	return randPartner(queue,callback);
+	    	// },200);
 	    }
 	}
 
-	// Assign partners to each
-	randPartner(userAvailable,function(partner){
+	randPartner(userAvailable,function(partner,pid){
+
+		// remove users from userAvailable
+		userAvailable.splice(pid,1);
+		for(key in userAvailable){
+			if(userAvailable[key] === socket.id)
+				userAvailable.splice(key,1);
+		}
+		// Assign partners to each
 		socket.set('partner', partner, function(err) {
 			if (err) { throw err; }
 		});
