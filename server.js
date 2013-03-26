@@ -20,6 +20,11 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('serverMessage','Stranger ' + content);
 	});
 
+	// user typing
+	socket.on('typing',function(){
+		socket.broadcast.emit('typing');
+	});
+
 	// client disconnected
 	socket.on('disconnect', function () {
 		userCount--; //decrese client count 
