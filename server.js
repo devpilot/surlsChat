@@ -14,6 +14,8 @@ io.sockets.on('connection', function (socket) {
 	socket.broadcast.emit('userCount', userCount);
 	console.log(Date(Date.now()) + ' Connected User ' + userCount);
 
+	userAvailable.push(socket.id); //storing available users
+
 	// receive and broadcast message
 	socket.on('clientMessage', function(content) {
 		socket.emit('serverMessage','You: '+ content);
