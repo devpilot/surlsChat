@@ -25,7 +25,16 @@
         <script src="http://192.168.0.100/real-time/script/jquery.min.js"></script>
         <script src="http://192.168.0.100:4000/socket.io/socket.io.js"></script>
         <script>
+        function init(){
+            $('#msgBox, #msgSend').attr("disabled",true);
+            $('#sysmsg').html('Connection...');
+        };
+        function initConnected(){
+            $('#msgBox, #msgSend').attr("disabled",false);
+            $('#sysmsg').html('Connected... say hi');
+        };
             $(document).ready(function(){
+                init();
                 var socket = io.connect('http://192.168.0.100:4000');
                 io.setHeartbeatTimeout = 100;
 
@@ -48,6 +57,23 @@
                     $('#typMsg').stop(false, true).fadeOut(1000);
                 });
 
+                // listen to system command
+                socket.on('syscmd', function(cmd){
+                    switch (cmd){
+                        case 'connected':
+                            initConnected();
+                            break;
+                        case 'connecting':
+
+                            break;
+                        case 'disconnected':
+
+                            break;
+                        default:
+                            init();
+                    };
+                });
+
                 /********** Send message *********/
                 $('#msgBox').keydown(function(e) {
                     //27 ESC
@@ -59,7 +85,7 @@
                     }
                 });
                 $('#msgSend').click(function(){
-                    setMessage($('#messages'));
+                    setMessage();
                 });
 
                 function setMessage(){
@@ -87,6 +113,7 @@
     <body>
         <p id="userCount">0 Users Online</p>
         <div id="msgWindow">
+            <p id="sysmsg"></p>
             <div id="messages"></div>
             <div id="typMsg">User is typing...</div>
         </div>
