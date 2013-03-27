@@ -83,5 +83,6 @@ function randomHandeler(userAvailable, socket){
 
 		//send connected...
 		socket.emit('syscmd','connected');
+		io.sockets.socket(partner).emit('syscmd','connected');
 	});
 }
