@@ -1,51 +1,102 @@
 <html>
-	<head>
-		<title>Socket.IO example application</title>
-		<style type="text/css">
-			#input {
-				width: 200px;
-			}
-			#messages {
-				position: fixed;
-				top: 40px;
-				bottom: 8px;
-				left: 8px;
-				right: 8px;
-				border: 1px solid #EEEEEE;
-				padding: 8px;
-			}
-		</style>
-		<script src="http://localhost:4000/socket.io/socket.io.js"></script>
-	</head>
-	<body>
-		Your message:
-		<input type="text" id="input">
-		<div id="messages"></div>
-	</body>
-	<script type="text/javascript">
-			var messagesElement = document.getElementById('messages');
-			var lastMessageElement = null;
-			function addMessage(message) {
-				var newMessageElement = document.createElement('div');
-				var newMessageText = document.createTextNode(message);
-				newMessageElement.appendChild(newMessageText);
-				messagesElement.insertBefore(newMessageElement,lastMessageElement);
-				lastMessageElement = newMessageElement;
-			}
-			var socket = io.connect('http://localhost:4000');
-			socket.on('serverMessage', function(content) {
-				addMessage(content);
-			});
-			
-			var inputElement = document.getElementById('input');
-			inputElement.onkeydown = function(keyboardEvent) {
-				if (keyboardEvent.keyCode === 13) {
-					socket.emit('clientMessage', inputElement.value);
-					inputElement.value = '';
-					return false;
-				} else {
-					return true;
-				}
-			};
-		</script>
+    <head>
+        <title id="pgTitle">Socket.IO Chat</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            #msgBox {
+                width: 200px;
+            }
+            #msgWindow {
+                border: 1px solid #EEEEEE;
+                padding: 8px;
+                position: relative;
+            }
+            #messages{
+                height: 200px;
+                overflow: auto;
+            }
+            #typMsg{
+                display: none;
+                position: absolute;
+                right: 15px;
+                bottom: 10px;
+            }
+        </style>
+        <script src="http://192.168.0.100/real-time/script/jquery.min.js"></script>
+        <script src="http://192.168.0.100:4000/socket.io/socket.io.js"></script>
+        <script>
+            $(document).ready(function(){
+                var socket = io.connect('http://192.168.0.100:4000');
+                io.setHeartbeatTimeout = 100;
+
+                socket.on('userCount', function(count) {
+                    $('#userCount').text(count + ' Users Online');
+                });
+
+                // listen to incomeing message
+                socket.on('serverMessage', function(msg){
+                    console.log(msg);
+                    $('#messages').append('<p>'+msg+'</p>');
+                    // set scroll to buttom
+                    var scrollHeight = document.getElementById('messages').scrollHeight; //get chat window
+                    $('#messages').scrollTop(scrollHeight);
+                });
+
+                // listen to typing 
+                socket.on('typing', function(){
+                    $('#typMsg').stop(false, true).fadeIn(800);
+                    $('#typMsg').stop(false, true).fadeOut(1000);
+                });
+
+                /********** Send message *********/
+                $('#msgBox').keydown(function(e) {
+                    //27 ESC
+                    if(e.keyCode === 13){
+                        setMessage();
+                        e.preventDefault();
+                    } else {
+                        socket.emit('typing');
+                    }
+                });
+                $('#msgSend').click(function(){
+                    setMessage($('#messages'));
+                });
+
+                function setMessage(){
+                    var msg = $.trim($('#msgBox').val());
+                    if(msg != ""){
+                        socket.emit('clientMessage',msg);
+                        $('#msgBox').val('');
+                    }
+                }
+                 /********** Send message end *********/
+
+                $('#connectBtn').click(function(){
+
+                });
+
+                $(window).focusout(function(){
+                    console.log("lost focus");
+                });
+                $(window).focusin(function(){
+                    console.log("In focus");
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <p id="userCount">0 Users Online</p>
+        <div id="msgWindow">
+            <div id="messages"></div>
+            <div id="typMsg">User is typing...</div>
+        </div>
+        <div class="controls">
+            <button id="connectBtn">Disconnect<br><span style="color: blue">Esc</span></button>
+            <textarea id="msgBox"></textarea>
+            <button id="msgSend">Send<br><span style="color: blue">Enter</span></button>
+        </div>
+        <div>
+            <p>Developed by <a href="http://facebook.com/aet419">DevPilot</a></p>
+        </div>
+    </body>
 </html>
