@@ -55,7 +55,7 @@ function randomHandeler(userAvailable, socket){
 			  return randPartner(queue,callback);
 	    	} else {
 	    		//clearTimeout(tO);
-	    	   callback(queue[k]);
+	    	   callback(queue[k],k);
 	    	}
 	    } else {
 	    	// var tO = setTimeout(function(){
