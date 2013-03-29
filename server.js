@@ -65,4 +65,20 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('userCount', userCount);
 		console.log(Date(Date.now()) + ' Connected User ' + userCount);
 	});
+
+	//user interaction
+	socket.on('syscmd', function(cmd){
+        switch (cmd){
+            case 'end':
+            	socket.emit('syscmd','end');
+            	socket.get('partner', function(err, partner) {
+            		io.sockets.socket(partner).emit('syscmd','end');
+            	});                
+                break;
+            case 'new':
+
+                break;
+            default:
+        };
+    });
 });
