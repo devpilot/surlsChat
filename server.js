@@ -1,7 +1,7 @@
 #!/bin/env node
 
 var io = require('socket.io').listen(4000);
-var mymod = require('./userhandeler');
+var uh = require('./userhandeler');
 
 var userCount = 0;
 
@@ -15,13 +15,13 @@ io.sockets.on('connection', function (socket) {
 	socket.broadcast.emit('userCount', userCount);
 	console.log(Date(Date.now()) + ' Connected User ' + userCount);
 
-	mymod.addUser(socket.id);
+	uh.addUser(socket.id);
 
 	//send connecting...
 	socket.emit('syscmd','connecting');
 
 	// starting new chat
-	mymod.makeChat(socket.id, function(partner){
+	uh.makeChat(socket.id, function(partner){
 
 		// Assign partners to each
 		socket.set('partner', partner, function(err) {
@@ -55,6 +55,12 @@ io.sockets.on('connection', function (socket) {
 
 	// client disconnected
 	socket.on('disconnect', function () {
+
+		// getting partner id and sending disconnect
+		socket.get('partner', function(err, partner) {
+			io.sockets.socket(partner).emit('syscmd','disconnected');
+		});
+
 		userCount--; //decrese client count 
 		socket.broadcast.emit('userCount', userCount);
 		console.log(Date(Date.now()) + ' Connected User ' + userCount);
