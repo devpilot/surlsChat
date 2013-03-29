@@ -21,20 +21,7 @@ io.sockets.on('connection', function (socket) {
 	socket.emit('syscmd','connecting');
 
 	// starting new chat
-	uh.makeChat(socket.id, function(partner){
-
-		// Assign partners to each
-		socket.set('partner', partner, function(err) {
-			if (err) { throw err; }
-		});
-		io.sockets.socket(partner).set('partner', socket.id, function(err) {
-			if (err) { throw err; }
-		});
-
-		//send connected...
-		socket.emit('syscmd','connected');
-		io.sockets.socket(partner).emit('syscmd','connected');
-	});
+	startChat();
 	
 	socket.get('partner', function(err, partner) {console.log(socket.id +' - '+partner);});
 
@@ -76,9 +63,26 @@ io.sockets.on('connection', function (socket) {
             	});                
                 break;
             case 'new':
-
+            	uh.addUser(socket.id);
+            	startChat();
                 break;
             default:
         };
     });
+
+    function startChat(){
+    	uh.makeChat(socket.id, function(partner){
+	    	// Assign partners to each
+			socket.set('partner', partner, function(err) {
+				if (err) { throw err; }
+			});
+			io.sockets.socket(partner).set('partner', socket.id, function(err) {
+				if (err) { throw err; }
+			});
+
+			//send connected...
+			socket.emit('syscmd','connected');
+			io.sockets.socket(partner).emit('syscmd','connected');
+		});
+    };
 });
