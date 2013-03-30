@@ -25,9 +25,10 @@
         <script src="http://192.168.0.100/real-time/script/jquery.min.js"></script>
         <script src="http://192.168.0.100:4000/socket.io/socket.io.js"></script>
         <script>
+        var connectBtnflag = 0;
         function init(){
             $('#msgBox, #msgSend').attr("disabled",true);
-            $('#sysmsg').html('Connection...');
+            $('#sysmsg').html('Connecting...');
         };
         function initConnected(){
             $('#msgBox, #msgSend').attr("disabled",false);
@@ -44,7 +45,6 @@
 
                 // listen to incomeing message
                 socket.on('serverMessage', function(msg){
-                    console.log(msg);
                     $('#messages').append('<p>'+msg+'</p>');
                     // set scroll to buttom
                     var scrollHeight = document.getElementById('messages').scrollHeight; //get chat window
@@ -62,12 +62,16 @@
                     switch (cmd){
                         case 'connected':
                             initConnected();
+                            $('#connectBtn > p').text("Disconnect");
+                            connectBtnflag = 0;
                             break;
                         case 'connecting':
 
                             break;
-                        case 'disconnected':
-
+                        case 'end':
+                            init();
+                            $('#connectBtn > p').text("New");
+                            connectBtnflag = 2;
                             break;
                         default:
                             init();
@@ -98,7 +102,38 @@
                  /********** Send message end *********/
 
                 $('#connectBtn').click(function(){
-
+                    switch (connectBtnflag){
+                        case 0:
+                            $('#connectBtn > p').text("Really?");
+                            connectBtnflag = 1;
+                            break;
+                        case 1:
+                            socket.emit('syscmd','end');
+                            connectBtnflag = 3; //prevent extra click
+                            break;
+                         case 2:
+                            socket.emit('syscmd','new');
+                            connectBtnflag = 3; //prevent extra click
+                            break;
+                    }
+                });
+                $(document).keydown(function(e){
+                    if(e.keyCode === 27){
+                        switch (connectBtnflag){
+                        case 0:
+                            $('#connectBtn > p').text("Really?");
+                            connectBtnflag = 1;
+                            break;
+                        case 1:
+                            socket.emit('syscmd','end');
+                            connectBtnflag = 3; //prevent extra click
+                            break;
+                         case 2:
+                            socket.emit('syscmd','new');
+                            connectBtnflag = 3; //prevent extra click
+                            break;
+                        }
+                    }
                 });
 
                 $(window).focusout(function(){
@@ -118,9 +153,9 @@
             <div id="typMsg">User is typing...</div>
         </div>
         <div class="controls">
-            <button id="connectBtn">Disconnect<br><span style="color: blue">Esc</span></button>
+            <button id="connectBtn"><p>Disconnect</p><span style="color: blue">Esc</span></button>
             <textarea id="msgBox"></textarea>
-            <button id="msgSend">Send<br><span style="color: blue">Enter</span></button>
+            <button id="msgSend"><p>Send</p><span style="color: blue">Enter</span></button>
         </div>
         <div>
             <p>Developed by <a href="http://facebook.com/aet419">DevPilot</a></p>
