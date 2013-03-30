@@ -1,7 +1,8 @@
-function userHandeler(){
+function userHandler(){
 
 	var userAvailable = [];
-
+	var self = this;
+	
 	// storing available users
 	this.addUser = function(id){
 		userAvailable.push(id);
@@ -13,7 +14,7 @@ function userHandeler(){
 	};
 
 	// remove self from queue
-	var removeSelf = function(id){
+	this.removeSelf = function(id){
 		for(key in userAvailable){
 			if(userAvailable[key] === id)
 				userAvailable.splice(key,1);
@@ -35,9 +36,9 @@ function userHandeler(){
 	this.makeChat = function(socketId,fn){
 		selectPartner(socketId, function(partner,pid){
 			removePartner(pid);
-			removeSelf(socketId);
+			self.removeSelf(socketId);
 			fn(partner);
 		});
 	};
 }
-module.exports = new userHandeler;
+module.exports = new userHandler;

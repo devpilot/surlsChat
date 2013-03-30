@@ -1,7 +1,7 @@
 #!/bin/env node
 
 var io = require('socket.io').listen(4000);
-var uh = require('./userhandeler');
+var uh = require('./userhandler');
 
 var userCount = 0;
 
@@ -42,6 +42,8 @@ io.sockets.on('connection', function (socket){
 
 	// client disconnected
 	socket.on('disconnect', function(){
+
+		uh.removeSelf(socket.id);
 
 		// getting partner id and sending disconnect
 		socket.get('partner', function(err, partner){
