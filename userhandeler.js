@@ -39,9 +39,5 @@ function userHandeler(){
 			fn(partner);
 		});
 	};
-	this.leaveChat = function(socketId, pid){
-		userAvailable.push(pid);
-		userAvailable.push(socketId);
-	};
 }
 module.exports = new userHandeler;

@@ -8,7 +8,7 @@ var userCount = 0;
 io.set('log level',1);
 
 // client connected 
-io.sockets.on('connection', function (socket) {
+io.sockets.on('connection', function (socket){
 
 	userCount++; // increse client count
 	socket.emit('userCount', userCount);
@@ -26,7 +26,7 @@ io.sockets.on('connection', function (socket) {
 	socket.get('partner', function(err, partner) {console.log(socket.id +' - '+partner);});
 
 	// receive and forward message
-	socket.on('clientMessage', function(content) {
+	socket.on('clientMessage', function(content){
 		socket.emit('serverMessage','You: '+ content);
 		socket.get('partner', function(err, partner) {
 			io.sockets.socket(partner).emit('serverMessage','Stranger ' + content);
@@ -35,16 +35,16 @@ io.sockets.on('connection', function (socket) {
 
 	// user typing
 	socket.on('typing',function(){
-		socket.get('partner', function(err, partner) {
+		socket.get('partner', function(err, partner){
 			io.sockets.socket(partner).emit('typing');
 		});
 	});
 
 	// client disconnected
-	socket.on('disconnect', function () {
+	socket.on('disconnect', function(){
 
 		// getting partner id and sending disconnect
-		socket.get('partner', function(err, partner) {
+		socket.get('partner', function(err, partner){
 			io.sockets.socket(partner).emit('syscmd','disconnected');
 		});
 
@@ -58,7 +58,7 @@ io.sockets.on('connection', function (socket) {
         switch (cmd){
             case 'end':
             	socket.emit('syscmd','end');
-            	socket.get('partner', function(err, partner) {
+            	socket.get('partner', function(err, partner){
             		io.sockets.socket(partner).emit('syscmd','end');
             	});                
                 break;
