@@ -25,7 +25,7 @@
         <script src="http://192.168.0.100/real-time/script/jquery.min.js"></script>
         <script src="http://192.168.0.100:4000/socket.io/socket.io.js"></script>
         <script>
-        var connectBtnflag = 0;
+        
         function init(){
             $('#msgBox, #msgSend').attr("disabled",true);
             $('#sysmsg').html('Connecting...');
@@ -35,10 +35,11 @@
             $('#sysmsg').html('Connected... say hi');
         };
             $(document).ready(function(){
+                
                 init();
                 var socket = io.connect('http://192.168.0.100:4000');
-                io.setHeartbeatTimeout = 100;
 
+                // listen to user count
                 socket.on('userCount', function(count) {
                     $('#userCount').text(count + ' Users Online');
                 });
@@ -55,27 +56,6 @@
                 socket.on('typing', function(){
                     $('#typMsg').stop(false, true).fadeIn(800);
                     $('#typMsg').stop(false, true).fadeOut(1000);
-                });
-
-                // listen to system command
-                socket.on('syscmd', function(cmd){
-                    switch (cmd){
-                        case 'connected':
-                            initConnected();
-                            $('#connectBtn > p').text("Disconnect");
-                            connectBtnflag = 0;
-                            break;
-                        case 'connecting':
-
-                            break;
-                        case 'end':
-                            init();
-                            $('#connectBtn > p').text("New");
-                            connectBtnflag = 2;
-                            break;
-                        default:
-                            init();
-                    };
                 });
 
                 /********** Send message *********/
@@ -101,6 +81,28 @@
                 }
                  /********** Send message end *********/
 
+                var connectBtnflag = 3;
+                 // listen to system command
+                socket.on('syscmd', function(cmd){
+                    switch (cmd){
+                        case 'connected':
+                            initConnected();
+                            $('#connectBtn > p').text("Disconnect");
+                            connectBtnflag = 0;
+                            break;
+                        case 'connecting':
+
+                            break;
+                        case 'end':
+                            init();
+                            $('#connectBtn > p').text("New");
+                            connectBtnflag = 2;
+                            break;
+                        default:
+                            init();
+                    };
+                });
+
                 $('#connectBtn').click(function(){
                     switch (connectBtnflag){
                         case 0:
@@ -108,12 +110,12 @@
                             connectBtnflag = 1;
                             break;
                         case 1:
-                            socket.emit('syscmd','end');
                             connectBtnflag = 3; //prevent extra click
+                            socket.emit('syscmd','end');                            
                             break;
                          case 2:
-                            socket.emit('syscmd','new');
                             connectBtnflag = 3; //prevent extra click
+                            socket.emit('syscmd','new');
                             break;
                     }
                 });
@@ -125,14 +127,15 @@
                             connectBtnflag = 1;
                             break;
                         case 1:
-                            socket.emit('syscmd','end');
                             connectBtnflag = 3; //prevent extra click
+                            socket.emit('syscmd','end');
                             break;
                          case 2:
-                            socket.emit('syscmd','new');
                             connectBtnflag = 3; //prevent extra click
+                            socket.emit('syscmd','new');
                             break;
                         }
+                        e.preventDefault();
                     }
                 });
 
