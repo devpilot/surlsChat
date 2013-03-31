@@ -66,6 +66,8 @@ io.sockets.on('connection', function (socket){
                 break;
             case 'new':
             	uh.addUser(socket.id);
+            	//send connecting...
+				socket.emit('syscmd','connecting');
             	startChat();
                 break;
             default:
