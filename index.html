@@ -81,6 +81,8 @@
                 socket.on('syscmd', function(cmd){
                     switch (cmd){
                         case 'connected':
+                            $('#messages').html('');
+                            $('#msgBox').val('');
                             init(false, 'Connected... say hi');
                             $('#connectBtn > p').text("Disconnect");
                             connectBtnflag = 0;
