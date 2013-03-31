@@ -43,11 +43,11 @@ io.sockets.on('connection', function (socket){
 	// client disconnected
 	socket.on('disconnect', function(){
 
-		uh.removeSelf(socket.id);
+		uh.removeSelf(socket.id); // remove self when not in a active chat
 
 		// getting partner id and sending disconnect
 		socket.get('partner', function(err, partner){
-			io.sockets.socket(partner).emit('syscmd','disconnected');
+			io.sockets.socket(partner).emit('syscmd','end');
 		});
 
 		userCount--; //decrese client count 
