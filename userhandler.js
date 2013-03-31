@@ -5,6 +5,7 @@ function userHandler(){
 	
 	// storing available users
 	this.addUser = function(id){
+		self.removeSelf(id); //remove same user if already exist
 		userAvailable.push(id);
 	};
 
