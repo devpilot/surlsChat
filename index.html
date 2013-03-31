@@ -26,17 +26,12 @@
         <script src="http://192.168.0.100:4000/socket.io/socket.io.js"></script>
         <script>
         
-        function init(){
-            $('#msgBox, #msgSend').attr("disabled",true);
-            $('#sysmsg').html('Connecting...');
+        function init(toggle, msg){
+            $('#msgBox, #msgSend').attr("disabled",toggle);
+            $('#sysmsg').html(msg);
         };
-        function initConnected(){
-            $('#msgBox, #msgSend').attr("disabled",false);
-            $('#sysmsg').html('Connected... say hi');
-        };
-            $(document).ready(function(){
-                
-                init();
+            $(document).ready(function(){                
+                init(true, 'Please wait connecting...');
                 var socket = io.connect('http://192.168.0.100:4000');
 
                 // listen to user count
@@ -86,20 +81,18 @@
                 socket.on('syscmd', function(cmd){
                     switch (cmd){
                         case 'connected':
-                            initConnected();
+                            init(false, 'Connected... say hi');
                             $('#connectBtn > p').text("Disconnect");
                             connectBtnflag = 0;
                             break;
                         case 'connecting':
-
+                            init(true, 'Please wait connecting...');                            
                             break;
                         case 'end':
-                            init();
+                            init(true, 'Disconnected...');
                             $('#connectBtn > p').text("New");
                             connectBtnflag = 2;
                             break;
-                        default:
-                            init();
                     };
                 });
 
