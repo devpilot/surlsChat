@@ -1,0 +1,15 @@
+{
+	"name" : "SocketChat",
+	"version" : "1.0.0",
+	"description":"A socket.IO and Node.js based random one to one chat",
+	"author": {
+		"name": "Devpilot",
+		"email": "aet419@gmail.com",
+		"url":  "http://facebook.com/aet419"
+	},
+	"dependencies" : {
+		"socket.io": "0.9.13"
+	},
+	"private": true,
+	"main": "server.js"
+}
