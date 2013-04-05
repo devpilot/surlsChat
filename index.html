@@ -32,7 +32,7 @@
         };
             $(document).ready(function(){                
                 init(true, 'Please wait connecting...');
-                var socket = io.connect('http://192.168.0.100:4000');
+                var socket = io.connect('http://192.168.0.100:4000',{'sync disconnect on unload': true});
 
                 // listen to user count
                 socket.on('userCount', function(count) {
