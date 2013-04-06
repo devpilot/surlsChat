@@ -24,8 +24,8 @@ $(document).ready(function() {
 
     // listen to typing
     socket.on('typing', function() {
-        $('#typMsg').stop(false, true).fadeIn(800);
-        $('#typMsg').stop(false, true).fadeOut(1000);
+        $('#messages').append('<p class="typMsg">User is typing...</p>').stop(false, true).fadeIn(800);
+        $('.typMsg').stop(false, true).fadeOut(1000,function(){$(this).remove();});
     });
 
     /********** Send message *********/

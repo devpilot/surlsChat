@@ -90,11 +90,8 @@ body {
     color: #D94D58;
     padding: 5px;
 }
-#typMsg{
-    display: none;
-    position: absolute;
-    right: 15px;
-    bottom: 10px;
+.typMsg{
+    
 }
 .controls{
     height: 60px;
