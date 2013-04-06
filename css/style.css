@@ -85,6 +85,10 @@ body {
     padding: 10px;
     overflow: auto;
 }
+.sysmsg{
+    color: #D94D58;
+    padding: 5px;
+}
 #typMsg{
     display: none;
     position: absolute;

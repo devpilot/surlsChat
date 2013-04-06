@@ -1,10 +1,10 @@
 function init(toggle, msg) {
     $('#msgBox, #msgSend').attr("disabled", toggle);
-    $('#sysmsg').html(msg);
+    $('#messages').append(msg);
 }
 ;
 $(document).ready(function() {
-    init(true, 'Please wait connecting...');
+    //init(true, 'Please wait connecting...');
     var socket = io.connect('http://192.168.0.100:4000', {'sync disconnect on unload': true});
 
     // listen to user count
@@ -56,15 +56,15 @@ $(document).ready(function() {
             case 'connected':
                 $('#messages').html('');
                 $('#msgBox').val('');
-                init(false, 'Connected... say hi');
+                init(false, '<p class="sysmsg">You\'re now connected with a random chat partner...<br/>Say Hello!</p>');
                 $('#connectBtn > p').text("Disconnect");
                 connectBtnflag = 0;
                 break;
             case 'connecting':
-                init(true, 'Please wait connecting...');
+                init(true, '<p class="sysmsg">Plsease wait...<br/>Connecting to random chat partner...</p>');
                 break;
             case 'end':
-                init(true, 'Disconnected...');
+                init(true, '<p class="sysmsg">You\'re disconnected.<br/><button>Chat with new stranger</button> or go to <a href="#">More Chat Rooms</a></p>');
                 $('#connectBtn > p').text("New");
                 connectBtnflag = 2;
                 break;
