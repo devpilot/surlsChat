@@ -69,7 +69,7 @@ body {
 }
 .rightad {
     float: right;
-    height: 520px;
+    height: 500px;
     width: 250px;
 }
 .col {
@@ -91,7 +91,7 @@ body {
     padding: 5px;
 }
 .typMsg{
-    
+
 }
 .controls{
     height: 60px;
