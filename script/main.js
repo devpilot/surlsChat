@@ -1,6 +1,8 @@
 function init(toggle, msg) {
     $('#msgBox, #msgSend').attr("disabled", toggle);
     $('#messages').append(msg);
+    var scrollHeight = document.getElementById('messages').scrollHeight; //get chat window
+    $('#messages').scrollTop(scrollHeight);
 }
 ;
 $(document).ready(function() {
