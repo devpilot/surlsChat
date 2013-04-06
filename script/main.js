@@ -1,6 +1,10 @@
 function init(toggle, msg) {
     $('#msgBox, #msgSend').attr("disabled", toggle);
     $('#messages').append(msg);
+    autoScroll();
+}
+function autoScroll(){
+    // set scroll to buttom
     var scrollHeight = document.getElementById('messages').scrollHeight; //get chat window
     $('#messages').scrollTop(scrollHeight);
 }
@@ -17,14 +21,13 @@ $(document).ready(function() {
     // listen to incomeing message
     socket.on('serverMessage', function(msg) {
         $('#messages').append('<p>' + msg + '</p>');
-        // set scroll to buttom
-        var scrollHeight = document.getElementById('messages').scrollHeight; //get chat window
-        $('#messages').scrollTop(scrollHeight);
+        autoScroll();
     });
 
     // listen to typing
     socket.on('typing', function() {
         $('#messages').append('<p class="typMsg">User is typing...</p>').stop(false, true).fadeIn(800);
+        autoScroll();
         $('.typMsg').stop(false, true).fadeOut(1000,function(){$(this).remove();});
     });
 
