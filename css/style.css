@@ -102,11 +102,15 @@ body {
 }
 .controls table{
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
 }
 .btn-cell{
     width: 100px;
+}
+.btn-cell:first-child{
+    padding-right: 0.5em;
+}
+.btn-cell:last-child{
+    padding-left: 1.2em;
 }
 .btn{
     width: 100%;
@@ -115,7 +119,7 @@ body {
 #msgBox{
     resize:none;
     height: 50px;
-    width: 99%;
+    width: 100%;
 }
 
 .bottomad {
