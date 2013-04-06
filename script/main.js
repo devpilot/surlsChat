@@ -63,6 +63,7 @@ $(document).ready(function() {
                 connectBtnflag = 0;
                 break;
             case 'connecting':
+                $('#messages').html('');
                 init(true, '<p class="sysmsg">Plsease wait...<br/>Connecting to random chat partner...</p>');
                 break;
             case 'end':
