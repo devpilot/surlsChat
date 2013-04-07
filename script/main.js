@@ -3,6 +3,23 @@ function init(toggle, msg) {
     $('#messages').append(msg);
     autoScroll();
 }
+function connBtnManage(flag, socket){
+    switch (flag){
+        case 0:
+            $('#connectBtn > p').text("Really?");
+            flag = 1;
+            break;
+        case 1:
+            flag = 3; //prevent extra click
+            socket.emit('syscmd','end');
+            break;
+         case 2:
+            flag = 3; //prevent extra click
+            socket.emit('syscmd','new');
+            break;
+    }
+    return flag;
+}
 function autoScroll(){
     // set scroll to buttom
     var scrollHeight = document.getElementById('messages').scrollHeight; //get chat window
@@ -79,37 +96,11 @@ $(document).ready(function() {
     });
 
     $('#connectBtn').click(function() {
-        switch (connectBtnflag) {
-            case 0:
-                $('#connectBtn > p').text("Really?");
-                connectBtnflag = 1;
-                break;
-            case 1:
-                connectBtnflag = 3; //prevent extra click
-                socket.emit('syscmd', 'end');
-                break;
-            case 2:
-                connectBtnflag = 3; //prevent extra click
-                socket.emit('syscmd', 'new');
-                break;
-        }
+        connectBtnflag = connBtnManage(connectBtnflag,socket);
     });
     $(document).keydown(function(e) {
         if (e.keyCode === 27) {
-            switch (connectBtnflag) {
-                case 0:
-                    $('#connectBtn > p').text("Really?");
-                    connectBtnflag = 1;
-                    break;
-                case 1:
-                    connectBtnflag = 3; //prevent extra click
-                    socket.emit('syscmd', 'end');
-                    break;
-                case 2:
-                    connectBtnflag = 3; //prevent extra click
-                    socket.emit('syscmd', 'new');
-                    break;
-            }
+            connectBtnflag = connBtnManage(connectBtnflag,socket);
             e.preventDefault();
         }
     });
