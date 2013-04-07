@@ -30,6 +30,23 @@
             $('#msgBox, #msgSend').attr("disabled",toggle);
             $('#sysmsg').html(msg);
         };
+        function connBtnManage(flag, socket){
+            switch (flag){
+                case 0:
+                    $('#connectBtn > p').text("Really?");
+                    flag = 1;
+                    break;
+                case 1:
+                    flag = 3; //prevent extra click
+                    socket.emit('syscmd','end');                            
+                    break;
+                 case 2:
+                    flag = 3; //prevent extra click
+                    socket.emit('syscmd','new');
+                    break;
+            }
+            return flag;
+        }
             $(document).ready(function(){                
                 init(true, 'Please wait connecting...');
                 var socket = io.connect('http://192.168.0.100:4000',{'sync disconnect on unload': true});
@@ -99,37 +116,11 @@
                 });
 
                 $('#connectBtn').click(function(){
-                    switch (connectBtnflag){
-                        case 0:
-                            $('#connectBtn > p').text("Really?");
-                            connectBtnflag = 1;
-                            break;
-                        case 1:
-                            connectBtnflag = 3; //prevent extra click
-                            socket.emit('syscmd','end');                            
-                            break;
-                         case 2:
-                            connectBtnflag = 3; //prevent extra click
-                            socket.emit('syscmd','new');
-                            break;
-                    }
+                    connectBtnflag = connBtnManage(connectBtnflag,socket);
                 });
                 $(document).keydown(function(e){
                     if(e.keyCode === 27){
-                        switch (connectBtnflag){
-                        case 0:
-                            $('#connectBtn > p').text("Really?");
-                            connectBtnflag = 1;
-                            break;
-                        case 1:
-                            connectBtnflag = 3; //prevent extra click
-                            socket.emit('syscmd','end');
-                            break;
-                         case 2:
-                            connectBtnflag = 3; //prevent extra click
-                            socket.emit('syscmd','new');
-                            break;
-                        }
+                        connectBtnflag = connBtnManage(connectBtnflag,socket);
                         e.preventDefault();
                     }
                 });
