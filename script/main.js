@@ -24,12 +24,11 @@ function autoScroll(){
     // set scroll to buttom
     var scrollHeight = document.getElementById('messages').scrollHeight; //get chat window
     $('#messages').scrollTop(scrollHeight);
-}
-;
-$(document).ready(function() {
-    //init(true, 'Please wait connecting...');
-    var socket = io.connect('http://192.168.0.100:4000', {'sync disconnect on unload': true});
+};
+var connectBtnflag = 3;
+var socket = io.connect('http://192.168.0.100:4000', {'sync disconnect on unload': true});
 
+$(document).ready(function() {
     // listen to user count
     socket.on('userCount', function(count) {
         $('#userCount').text(count + ' Users Online');
@@ -71,7 +70,6 @@ $(document).ready(function() {
     }
     /********** Send message end *********/
 
-    var connectBtnflag = 3;
     // listen to system command
     socket.on('syscmd', function(cmd) {
         switch (cmd) {
@@ -87,7 +85,7 @@ $(document).ready(function() {
                 init(true, '<p class="sysmsg">Plsease wait...</p><p class="sysmsg">Connecting to random chat partner...</p>');
                 break;
             case 'end':
-                init(true, '<p class="sysmsg">You\'re disconnected.</p><p class="sysmsg"><button>Chat with new stranger</button> or go to <a href="#">More Chat Rooms</a></p>');
+                init(true, '<p class="sysmsg">You\'re disconnected.</p><p class="sysmsg"><button id="newChatBtn">Chat with new stranger</button> or go to <a href="#">More Chat Rooms</a></p>');
                 $('#connectBtn > p').text("New");
                 connectBtnflag = 2;
                 break;
@@ -104,11 +102,14 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
-
     $(window).focusout(function() {
         console.log("lost focus");
     });
     $(window).focusin(function() {
         console.log("In focus");
     });
+});
+// new chat button on chat window
+$(document).on('click','#newChatBtn',function(){
+    connectBtnflag = connBtnManage(connectBtnflag,socket);
 });
