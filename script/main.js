@@ -42,7 +42,7 @@ $(document).ready(function() {
 
     // listen to typing
     socket.on('typing', function() {
-        $('#messages').append('<p class="typMsg">Strenger is typing...</p>').stop(false, true).fadeIn(600);
+        $('#messages').append('<p class="typMsg">Stranger is typing...</p>').stop(false, true).fadeIn(600);
         autoScroll();
         $('.typMsg').stop(false, true).fadeOut(600,function(){$(this).remove();});
     });

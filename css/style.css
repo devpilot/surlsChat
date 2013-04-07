@@ -95,13 +95,12 @@ body {
     border-radius: 0.5em;
     -moz-border-radius: 0.5em;
     -webkit-border-radius: 0.5em;
+    margin-right: 5px;
 }
 .you{    
     background-color: #555;
 }
-.stranger{
-    margin-left: 0px;
-    margin-right: 5px;
+.stranger{    
     background-color: #D94D58;
 }
 .sysmsg{
