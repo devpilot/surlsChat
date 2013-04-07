@@ -86,8 +86,35 @@ body {
     overflow: auto;
     word-wrap: break-word;
 }
+.msg-item{
+    padding: 5px 0;
+}
+.you{
+    padding: 4px;
+    color: #FFF4F4;
+    background-color: #555;
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    font-weight: bold;
+}
+
+.stranger{
+    padding: 4px;
+    color: #FFF4F4;
+    margin-left: 0px;
+    margin-right: 5px;
+    background-color: #D94D58;
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    
+    font-weight: bold;
+}
 .sysmsg{
-    color: #D94D58;
+   color: #D94D58;
+    font-size: 0.9em;
+    font-weight: bold;
     padding: 5px;
 }
 .typMsg{
