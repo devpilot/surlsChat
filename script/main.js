@@ -20,13 +20,13 @@ $(document).ready(function() {
 
     // listen to incomeing message
     socket.on('serverMessage', function(msg) {
-        $('#messages').append('<p>' + msg + '</p>');
+        $('#messages').append('<p class="msg-item">' + msg + '</p>');
         autoScroll();
     });
 
     // listen to typing
     socket.on('typing', function() {
-        $('#messages').append('<p class="typMsg">User is typing...</p>').stop(false, true).fadeIn(800);
+        $('#messages').append('<p class="typMsg">Strenger is typing...</p>').stop(false, true).fadeIn(800);
         autoScroll();
         $('.typMsg').stop(false, true).fadeOut(1000,function(){$(this).remove();});
     });
