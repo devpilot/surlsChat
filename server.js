@@ -27,9 +27,9 @@ io.sockets.on('connection', function (socket){
 
 	// receive and forward message
 	socket.on('clientMessage', function(content){
-		socket.emit('serverMessage','You: '+ content);
+		socket.emit('serverMessage','<span class="you">You:</span> '+ content);
 		socket.get('partner', function(err, partner) {
-			io.sockets.socket(partner).emit('serverMessage','Stranger ' + content);
+			io.sockets.socket(partner).emit('serverMessage','<span class="stranger">Stranger:</span> ' + content);
 		});
 	});
 
