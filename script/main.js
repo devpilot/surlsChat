@@ -26,9 +26,9 @@ $(document).ready(function() {
 
     // listen to typing
     socket.on('typing', function() {
-        $('#messages').append('<p class="typMsg">Strenger is typing...</p>').stop(false, true).fadeIn(800);
+        $('#messages').append('<p class="typMsg">Strenger is typing...</p>').stop(false, true).fadeIn(600);
         autoScroll();
-        $('.typMsg').stop(false, true).fadeOut(1000,function(){$(this).remove();});
+        $('.typMsg').stop(false, true).fadeOut(600,function(){$(this).remove();});
     });
 
     /********** Send message *********/
@@ -61,16 +61,16 @@ $(document).ready(function() {
             case 'connected':
                 $('#messages').html('');
                 $('#msgBox').val('');
-                init(false, '<p class="sysmsg">You\'re now connected with a random chat partner...<br/>Say Hello!</p>');
+                init(false, '<p class="sysmsg">You\'re now connected with a random chat partner...</p><p class="sysmsg">Say Hello!</p>');
                 $('#connectBtn > p').text("Disconnect");
                 connectBtnflag = 0;
                 break;
             case 'connecting':
                 $('#messages').html('');
-                init(true, '<p class="sysmsg">Plsease wait...<br/>Connecting to random chat partner...</p>');
+                init(true, '<p class="sysmsg">Plsease wait...</p><p class="sysmsg">Connecting to random chat partner...</p>');
                 break;
             case 'end':
-                init(true, '<p class="sysmsg">You\'re disconnected.<br/><button>Chat with new stranger</button> or go to <a href="#">More Chat Rooms</a></p>');
+                init(true, '<p class="sysmsg">You\'re disconnected.</p><p class="sysmsg"><button>Chat with new stranger</button> or go to <a href="#">More Chat Rooms</a></p>');
                 $('#connectBtn > p').text("New");
                 connectBtnflag = 2;
                 break;

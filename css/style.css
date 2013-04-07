@@ -86,30 +86,23 @@ body {
     overflow: auto;
     word-wrap: break-word;
 }
-.msg-item{
-    padding: 5px 0;
-}
-.you{
+#messages p{padding: 5px 0}
+.msg-item{}
+.you, .stranger{
     padding: 4px;
     color: #FFF4F4;
-    background-color: #555;
+    font-weight: bold;
     border-radius: 0.5em;
     -moz-border-radius: 0.5em;
     -webkit-border-radius: 0.5em;
-    font-weight: bold;
 }
-
+.you{    
+    background-color: #555;
+}
 .stranger{
-    padding: 4px;
-    color: #FFF4F4;
     margin-left: 0px;
     margin-right: 5px;
     background-color: #D94D58;
-    border-radius: 0.5em;
-    -moz-border-radius: 0.5em;
-    -webkit-border-radius: 0.5em;
-    
-    font-weight: bold;
 }
 .sysmsg{
    color: #D94D58;
@@ -117,9 +110,7 @@ body {
     font-weight: bold;
     padding: 5px;
 }
-.typMsg{
-
-}
+.typMsg{}
 .controls{
     margin: 10px auto;
 }
