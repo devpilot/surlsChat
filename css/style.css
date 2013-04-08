@@ -18,6 +18,7 @@ body {
     top: 0.7em;
     left: 1em;
 }
+.logo img{border: none;} /*remove border in IE*/
 #userCount {
     width: 147px;
     height: 17px;
