@@ -153,8 +153,9 @@ body {
 }
 .icons{
     position: absolute;
-    top: -135px;
+    top: -130px;
     right: 114px;
+    display: none;
 }
 .icons table td:hover{background: red;}
 .icons img{

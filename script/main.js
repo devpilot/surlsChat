@@ -113,3 +113,137 @@ $(document).ready(function() {
 $(document).on('click','#newChatBtn',function(){
     connectBtnflag = connBtnManage(connectBtnflag,socket);
 });
+
+/*---------------------------------- Smiley -------------------------------------------*/
+(function($) {
+    $.fn.getCursorPosition = function() {
+        var input = this.get(0);
+        if (!input) return; // No (input) element found
+        if ('selectionStart' in input) {
+            // Standard-compliant browsers
+            return input.selectionStart;
+        } else if (document.selection) {
+            // IE
+            input.focus();
+            var sel = document.selection.createRange();
+            var selLen = document.selection.createRange().text.length;
+            sel.moveStart('character', -input.value.length);
+            return sel.text.length - selLen;
+        }
+    }
+    $.fn.setCursorPosition = function(position){
+        var input = this.get(0);
+        if (!input) return; // No (input) element found
+        if ('selectionStart' in input) {
+            // Standard-compliant browsers
+            input.selectionStart = position;
+            input.selectionEnd = position;
+        } else if (document.selection) {
+            // IE
+            // Need to fix older IE crap
+        }
+    }
+})(jQuery);
+
+$(document).ready(function(){
+    var pos;
+    $(".sm_icon").click(function(e){
+        //var sym = $(this).html(); //get smiley text
+        var sym = $(this).attr("alt")
+        pos = $("#msgBox").getCursorPosition();
+        $("#msgBox").val(addSymbol($("#msgBox").val(),pos,sym));
+        $("#msgBox").focus().setCursorPosition(pos + sym.length +2); // Set smiley offset
+        $(".icons").hide();
+        e.preventDefault();
+    })
+    $("#smileyToggle").click(function(e){
+        if($(".icons").is(":visible"))
+            $(".icons").hide();
+        else
+            $(".icons").show();
+        e.stopPropagation();
+    })
+
+    $(document).click(function(){
+        $(".icons").hide();
+    });
+});
+
+// Insetr smiley
+function addSymbol(str,pos,sym){
+    sp = new Array;
+    sp[0] = str.substring(0,pos);
+    sp[1] = ltrim(str.substring(pos,str.length));
+    return sp[0]+' '+ sym +' '+ sp[1];
+}
+
+// trim left whitespace
+function ltrim(s){
+    var l=0;
+    while(l < s.length && s[l] == ''){
+        l++;
+    }
+    return s.substring(l, s.length);
+}
+
+// Replace smiley symbol with image on sent messages
+function convertSmiley(msg, fn){
+    msg =   msg.split('::laugh').join("<img src='icons/laughing.gif' /> ");
+    msg =   msg.split('::angry').join("<img src='icons/angry.gif' /> ");
+    msg =   msg.split('::blush').join("<img src='icons/blush.gif' /> ");
+    msg =   msg.split('::clap').join("<img src='icons/clap.gif' /> ");
+    msg =   msg.split('::haha').join("<img src='icons/haha.gif' /> ");
+    msg =   msg.split('::cool').join("<img src='icons/cool.gif' /> ");
+    msg =   msg.split('::kiss').join("<img src='icons/kiss.gif' /> ");
+    msg =   msg.split('::yawn').join("<img src='icons/yawn.gif' /> ");
+    msg =   msg.split('::loser').join("<img src='icons/loser.gif' /> ");
+    msg =   msg.split('::heart').join("<img src='icons/heart.gif' /> ");
+    msg =   msg.split('::oh').join("<img src='icons/oh.gif' /> ");
+    msg =   msg.split('::boo').join("<img src='icons/party.gif' /> ");
+    msg =   msg.split('::oon').join("<img src='icons/oon.gif' /> ");
+    msg =   msg.split('::roll').join("<img src='icons/roll.gif' /> ");
+    msg =   msg.split(':(').join("<img src='icons/sad.gif' /> ");
+    msg =   msg.split('::sleepy').join("<img src='icons/sleepy.gif' /> ");
+    msg =   msg.split('::snatch').join("<img src='icons/snatch.gif' /> ");
+    msg =   msg.split('::what').join("<img src='icons/surprise.gif' /> ");
+    msg =   msg.split('::stop').join("<img src='icons/stop.gif' /> ");
+    msg =   msg.split('::thinking').join("<img src='icons/thinking.gif' /> ");
+    msg =   msg.split('::timeout').join("<img src='icons/timeout.gif' /> ");
+    msg =   msg.split(':p').join("<img src='icons/tongue.gif' /> ");
+    msg =   msg.split('::waiting').join("<img src='icons/waiting.gif' /> ");
+    msg =   msg.split('::bye').join("<img src='icons/bye.gif' /> ");
+    msg =   msg.split('::whew').join("<img src='icons/whew.gif' /> ");
+    msg =   msg.split('::wink').join("<img src='icons/winking.gif' /> ");
+    msg =   msg.split('::worry').join("<img src='icons/worried.gif' /> ");
+    msg =   msg.split('::silly').join("<img src='icons/silly.gif' /> ");
+    msg =   msg.split('::sick').join("<img src='icons/sick.gif' /> ");
+    msg =   msg.split(':)').join("<img src='icons/happy.gif' /> ");
+    msg =   msg.split('::yeah').join("<img src='icons/yeah.gif' /> ");
+    msg =   msg.split('::broken').join("<img src='icons/broken.gif' /> ");
+    msg =   msg.split('::confuse').join("<img src='icons/confuse.gif' /> ");
+    msg =   msg.split('::crying').join("<img src='icons/crying.gif' /> ");
+    msg =   msg.split('::devil').join("<img src='icons/devil.gif' /> ");
+    msg =   msg.split('::dayd').join("<img src='icons/dayd.gif' /> ");
+    msg =   msg.split('::drooling').join("<img src='icons/drooling.gif' /> ");
+    msg =   msg.split('::eyebrow').join("<img src='icons/eyebrow.gif' /> ");
+    msg =   msg.split('::duntel').join("<img src='icons/duntel.gif' /> ");
+    msg =   msg.split('::scared').join("<img src='icons/scared.gif' /> ");
+    msg =   msg.split('::notalk').join("<img src='icons/notalk.gif' /> ");
+    msg =   msg.split('::bful').join("<img src='icons/bful.gif' /> ");
+    msg =   msg.split('::hello').join("<img src='icons/hello.gif' /> ");
+    msg =   msg.split('::hugs').join("<img src='icons/hugs.gif' /> ");
+    msg =   msg.split('::iloveu').join("<img src='icons/iloveu.gif' /> ");
+    msg =   msg.split('::imsorry').join("<img src='icons/imsorry.gif' /> ");
+    msg =   msg.split('::salam').join("<img src='icons/salam.gif' /> ");
+    msg =   msg.split('::thanks').join("<img src='icons/thanks.gif' /> ");
+    msg =   msg.split('::thanku').join("<img src='icons/thanku.gif' /> ");
+
+fn(msg);
+}
+
+/*-------------------------- Sound --------------------------*/
+function playSound(){
+    var sound = document.getElementById('alt-sound');
+    console.info(sound);
+    sound.play();
+}
