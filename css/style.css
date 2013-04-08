@@ -143,11 +143,12 @@ body {
 }
 /*---------------- Smiley --------------------*/
 #smileyToggle{
-    width: 40px;
+    width: 52px;
     height: 60px;
     text-indent: -9999px;
     border: none;
-    background: #EEE;
+    background: url("../images/emoticons-set.png") no-repeat center;
+    background-color: red;
     cursor: pointer;
 }
 .icons{
