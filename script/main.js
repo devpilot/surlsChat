@@ -1,5 +1,5 @@
 function init(toggle, msg) {
-    $('#msgBox, #msgSend').attr("disabled", toggle);
+    $('#msgBox, #msgSend, #smileyToggle').attr("disabled", toggle);
     $('#messages').append(msg);
     autoScroll();
 }
