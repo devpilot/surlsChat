@@ -148,9 +148,11 @@ body {
     height: 60px;
     text-indent: -9999px;
     border: none;
-    background: url("../images/emoticons-set.png") no-repeat center;
-    background-color: red;
+    background: url("../images/emoticons-set.png") no-repeat center #D94D58;
     cursor: pointer;
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
 }
 .icons{
     position: absolute;
