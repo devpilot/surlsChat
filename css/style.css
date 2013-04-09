@@ -147,6 +147,7 @@ body {
     padding: 5px;
     background: none;
     border: none;
+    outline: none; /*remove glow in chrome*/
 }
 /*---------------- Smiley --------------------*/
 #smileyToggle{
