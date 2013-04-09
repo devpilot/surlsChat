@@ -37,15 +37,16 @@ $(document).ready(function() {
     // listen to incomeing message
     socket.on('serverMessage', function(msg) {
         convertSmiley(msg,function(msg){
-            $('#messages').append('<p class="msg-item">' + msg + '</p>');
+            $('.typStat').remove();
+            $('#messages').append('<p class="msg-item">' + msg + '</p><div class="typStat"></div>');
             autoScroll();
         })
     });
 
     // listen to typing
     socket.on('typing', function() {
-        $('#messages').append('<p class="typMsg">Stranger is typing...</p>').stop(false, true).fadeIn(600);
-        autoScroll();
+        $('.typStat').append('<p class="typMsg">Stranger is typing...</p>').stop(false, true).fadeIn(600);
+        //autoScroll();
         $('.typMsg').stop(false, true).fadeOut(600,function(){$(this).remove();});
     });
 
@@ -78,7 +79,7 @@ $(document).ready(function() {
             case 'connected':
                 $('#messages').html('');
                 $('#msgBox').val('');
-                init(false, '<p class="sysmsg">You\'re now connected with a random chat partner...</p><p class="sysmsg">Say Hello!</p>');
+                init(false, '<p class="sysmsg">You\'re now connected with a random chat partner...</p><p class="sysmsg">Say Hello!</p><div class="typStat"></div>');
                 $('#connectBtn > p').text("Disconnect");
                 connectBtnflag = 0;
                 break;

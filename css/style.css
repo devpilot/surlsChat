@@ -110,7 +110,14 @@ body {
     font-weight: bold;
     padding: 5px;
 }
-.typMsg{}
+/*------------- type message ------------------*/
+.typMsg{
+    color: rgb(85,85,85);
+    font-weight: bold;
+    font-size: 0.8em;
+}
+.typStat{height: 26px;}
+
 .controls{
     margin: 10px auto;
     position: relative;
