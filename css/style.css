@@ -70,7 +70,7 @@ body {
 }
 .rightad {
     float: right;
-    height: 515px;
+    height: 520px;
     width: 250px;
 }
 .col {
@@ -160,7 +160,12 @@ body {
     right: 114px;
     display: none;
 }
-.icons table td:hover{background: red;}
+.icons table td:hover{
+    background: #D94D58;
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+}
 .icons img{
     display: block;
     margin:auto;
