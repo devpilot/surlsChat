@@ -29,6 +29,13 @@ var connectBtnflag = 3;
 var socket = io.connect('http://192.168.0.100:4000', {'sync disconnect on unload': true});
 
 $(document).ready(function() {
+    // Enter chat first time
+    $('#chatbutton').click(function(e){
+        e.preventDefault();
+        $('#intro').hide();
+            connectBtnflag = connBtnManage(2,socket);
+            $('#main-wrap').show();
+    });
     // listen to user count
     socket.on('userCount', function(count) {
         $('#userCount').text(count + ' Users Online');

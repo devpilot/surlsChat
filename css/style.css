@@ -58,7 +58,6 @@ body {
 #intro {
     height: 425px;
     margin: 0.7em;
-    display: none;
 }
 #intro img{
     display: block;
@@ -66,7 +65,7 @@ body {
 }
 #main-wrap{
     margin: 0.7em;
-    /*display: none;*/
+    display: none;
 }
 .rightad {
     float: right;
