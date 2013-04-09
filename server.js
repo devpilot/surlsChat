@@ -14,16 +14,8 @@ io.sockets.on('connection', function (socket){
 	socket.emit('userCount', userCount);
 	socket.broadcast.emit('userCount', userCount);
 	console.log(Date(Date.now()) + ' Connected User ' + userCount);
-
-	uh.addUser(socket.id);
-
-	//send connecting...
-	socket.emit('syscmd','connecting');
-
-	// starting new chat
-	startChat();
 	
-	socket.get('partner', function(err, partner) {console.log(socket.id +' - '+partner);});
+	//socket.get('partner', function(err, partner) {console.log(socket.id +' - '+partner);});
 
 	// receive and forward message
 	socket.on('clientMessage', function(content){
