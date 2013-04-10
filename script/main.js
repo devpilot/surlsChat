@@ -47,6 +47,7 @@ $(document).ready(function() {
             $('.typStat').remove();
             $('#messages').append('<p class="msg-item">' + msg + '</p><div class="typStat"></div>');
             autoScroll();
+            playSound();
         })
     });
 
