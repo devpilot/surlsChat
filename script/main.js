@@ -39,6 +39,7 @@ var connectBtnflag = 3;
 var socket = io.connect('http://192.168.0.100:4000', {'sync disconnect on unload': true});
 
 $(document).ready(function() {
+    var pgTitle = $('#pgTitle').text();
     // Enter chat first time
     $('#chatbutton').click(function(e){
         e.preventDefault();
@@ -54,6 +55,7 @@ $(document).ready(function() {
     // listen to incomeing message
     socket.on('serverMessage', function(msg) {
             appendMsg(msg);
+            $('#pgTitle').text('Surs.us - New message');
             playSound();
     });
 
@@ -120,11 +122,9 @@ $(document).ready(function() {
             e.preventDefault();
         }
     });
-    $(window).focusout(function() {
-        console.log("lost focus");
-    });
-    $(window).focusin(function() {
-        console.log("In focus");
+
+    $(window).focus(function() {
+        $('#pgTitle').text(pgTitle); // set default title
     });
 });
 // new chat button on chat window
@@ -262,6 +262,5 @@ fn(msg);
 /*-------------------------- Sound --------------------------*/
 function playSound(){
     var sound = document.getElementById('alt-sound');
-    console.info(sound);
     sound.play();
 }
