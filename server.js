@@ -5,7 +5,13 @@ var uh = require('./userhandler');
 
 var userCount = 0;
 
-io.set('log level',1);
+io.configure('production', function(){
+	// io.set('origins', 'localhost:80');
+	io.set('log level', 1);
+	io.enable('browser client minification'); 
+	io.enable('browser client etag');
+	io.enable('browser client gzip');
+});
 
 // client connected 
 io.sockets.on('connection', function (socket){
