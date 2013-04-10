@@ -19,7 +19,7 @@ io.sockets.on('connection', function (socket){
 
 	// receive and forward message
 	socket.on('clientMessage', function(content){
-		socket.emit('serverMessage','<span class="you">*&#9829;*&#9829;**Me**&#9829;*&#9829;*</span> '+ content);
+		//socket.emit('serverMessage','<span class="you">*&#9829;*&#9829;**Me**&#9829;*&#9829;*</span> '+ content);
 		socket.get('partner', function(err, partner) {
 			io.sockets.socket(partner).emit('serverMessage','<span class="stranger">*&#9829;*Stranger*&#9829;*</span> ' + content);
 		});
@@ -77,6 +77,7 @@ io.sockets.on('connection', function (socket){
 			io.sockets.socket(partner).emit('syscmd','connected');
 		});
     };
+    
     function chatEnd(){
     	socket.get('partner', function(err, partner){
     		socket.set('partner', '', function(err) {

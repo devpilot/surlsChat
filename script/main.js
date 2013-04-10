@@ -25,6 +25,14 @@ function autoScroll(){
     var scrollHeight = document.getElementById('messages').scrollHeight; //get chat window
     $('#messages').scrollTop(scrollHeight);
 };
+
+// append messages to chat window
+function appendMsg(msg){
+    $('.typStat').remove();
+    $('#messages').append('<p class="msg-item">' + msg + '</p><div class="typStat"></div>');
+    autoScroll();
+};
+
 var connectBtnflag = 3;
 var socket = io.connect('http://192.168.0.100:4000', {'sync disconnect on unload': true});
 
@@ -44,9 +52,7 @@ $(document).ready(function() {
     // listen to incomeing message
     socket.on('serverMessage', function(msg) {
         convertSmiley(msg,function(msg){
-            $('.typStat').remove();
-            $('#messages').append('<p class="msg-item">' + msg + '</p><div class="typStat"></div>');
-            autoScroll();
+            appendMsg(msg);
             playSound();
         })
     });
@@ -75,6 +81,7 @@ $(document).ready(function() {
     function setMessage() {
         var msg = $.trim($('#msgBox').val());
         if (msg != "") {
+            appendMsg('<span class="you">*&#9829;*&#9829;**Me**&#9829;*&#9829;*</span> '+msg)
             socket.emit('clientMessage', msg);
             $('#msgBox').val('');
         }
