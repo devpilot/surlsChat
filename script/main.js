@@ -29,8 +29,10 @@ function autoScroll(){
 // append messages to chat window
 function appendMsg(msg){
     $('.typStat').remove();
-    $('#messages').append('<p class="msg-item">' + msg + '</p><div class="typStat"></div>');
-    autoScroll();
+    convertSmiley(msg,function(msg){
+        $('#messages').append('<p class="msg-item">' + msg + '</p><div class="typStat"></div>');
+        autoScroll();
+    });
 };
 
 var connectBtnflag = 3;
@@ -51,10 +53,8 @@ $(document).ready(function() {
 
     // listen to incomeing message
     socket.on('serverMessage', function(msg) {
-        convertSmiley(msg,function(msg){
             appendMsg(msg);
             playSound();
-        })
     });
 
     // listen to typing
