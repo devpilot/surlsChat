@@ -38,9 +38,7 @@ io.sockets.on('connection', function (socket){
 		uh.removeSelf(socket.id); // remove self when not in a active chat
 
 		// getting partner id and sending disconnect
-		socket.get('partner', function(err, partner){
-			io.sockets.socket(partner).emit('syscmd','end');
-		});
+		chatEnd();
 
 		userCount--; //decrese client count 
 		socket.broadcast.emit('userCount', userCount);
@@ -52,9 +50,7 @@ io.sockets.on('connection', function (socket){
         switch (cmd){
             case 'end':
             	socket.emit('syscmd','end');
-            	socket.get('partner', function(err, partner){
-            		io.sockets.socket(partner).emit('syscmd','end');
-            	});                
+            	chatEnd();
                 break;
             case 'new':
             	uh.addUser(socket.id);
@@ -80,5 +76,16 @@ io.sockets.on('connection', function (socket){
 			socket.emit('syscmd','connected');
 			io.sockets.socket(partner).emit('syscmd','connected');
 		});
+    };
+    function chatEnd(){
+    	socket.get('partner', function(err, partner){
+    		socket.set('partner', '', function(err) {
+				if (err) { throw err; }
+				io.sockets.socket(partner).emit('syscmd','end');
+				io.sockets.socket(partner).set('partner', '', function(err) {
+				if (err) { throw err; }
+			});
+			});
+    	});
     };
 });
