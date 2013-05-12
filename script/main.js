@@ -36,7 +36,7 @@ function appendMsg(msg){
 };
 
 var connectBtnflag = 3;
-var socket = io.connect('http://192.168.0.100:4000', {'sync disconnect on unload': true});
+var socket = io.connect('http://localhost:4000', {'sync disconnect on unload': true});
 
 $(document).ready(function() {
     var pgTitle = $('#pgTitle').text();

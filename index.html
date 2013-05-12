@@ -7,27 +7,9 @@
         <meta name="description" content="Surls Chat - USA Chat - UK Chat - One-on-One Chat - Free Chat - Canada Chat - Australia Chat - Chat Free - Surls.us">
         <meta name="google-translate-customization" content="c0ce9f0af0b8e73a-c5ec174f09f497fb-g551988febb330741-d">
         <link href='images/favicon.ico' rel='shortcut icon'/>
-        function connBtnManage(flag, socket){
-            switch (flag){
-                case 0:
-                    $('#connectBtn > p').text("Really?");
-                    flag = 1;
-                    break;
-                case 1:
-                    flag = 3; //prevent extra click
-                    socket.emit('syscmd','end');                            
-                    break;
-                 case 2:
-                    flag = 3; //prevent extra click
-                    socket.emit('syscmd','new');
-                    break;
-            }
-            return flag;
-        }
-
         <link type = "text/css" rel = "stylesheet" href = "css/style.css">
         <script type="text/javascript" src="script/jquery.min.js"></script>
-        <script src="http://192.168.0.100:4000/socket.io/socket.io.js"></script>
+        <script src="http://localhost:4000/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="script/main.js"></script>
     </head>
     <body>
